@@ -75,6 +75,9 @@ const countAllProperty = (data, property) => {
 // Make histogram. The goal is to return an array with values 
 // of a properties divided into buckets and counting the number
 // of items in each bucket.
+// step is the value division. For example if step were 10 and the 
+// property was age. you would counting how many passengers were 
+// ages 0 - 10, 10 - 20, 20 - 30 etc. 
 
 const makeHistogram = (data, property, step) => {
 	return []
