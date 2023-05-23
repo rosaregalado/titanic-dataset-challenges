@@ -103,6 +103,16 @@ Under `fields` there are the following keys:
 
 Not all records have all of the data. Some are missing one field or another. There might some cases where you'll need to filter out records that are missing a value.
 
+## Use map, filter, and reduce to solev these problems
+
+- Map: The map method is crucial because it allows you to transform each element of an array into a new array, based on a provided function. It enables you to apply a specific operation or manipulation to every item in an array, returning a new array of the same length. By using map, you can efficiently perform operations like modifying values, extracting specific properties, or even creating entirely new objects from the original array.
+- Filter: The filter method is essential when you want to selectively extract elements from an array based on a condition. It takes a function that evaluates each item, and if the function returns true, the item is included in the resulting array. This enables you to easily create new arrays containing only the elements that satisfy a particular criteria, such as filtering out certain values, finding specific patterns, or removing unwanted data from a dataset.
+- Reduce: The reduce method is a powerful tool for performing aggregations or calculations on an array of values. It applies a function against an accumulator and each element of the array, reducing the array to a single value. With reduce, you can efficiently compute sums, products, averages, or any other complex calculations by sequentially processing the array elements. It allows you to solve problems that require iterating over the array and maintaining a running total or accumulating data.
+
+These three methods, map, filter, and reduce, are vital in JavaScript programming as they provide elegant and concise ways to transform, filter, and aggregate data within arrays. They promote code readability, reusability, and enable you to write more declarative and functional-style code. Mastering these methods empowers you to write cleaner, more efficient, and expressive JavaScript code.
+
+Map, filter, and reduce abstract the most common array manipulation operations into easy to use functions. 
+
 ## Use Array.filter() to find matching records
 
 Use `Array.filter()` to find records that have a matching value. Filter returns a new array with only the matching items. 
@@ -177,6 +187,44 @@ Math.max(...[56, 23, 78, 94])
 ```
 
 NOTE! If fare is missing for a passenger the array returned from map will contain an undefined value: `[56, 23, undefined, 78, ...]` this can lead to problems! Try filtering for the missing values first! 
+
+## Use reduce to turn a collection into a single value
+
+Reduce looks at each element of an array and accumulates a value. For example image you wanted the total fares paid on the Titanic: 
+
+```JS
+const totalFare = data.reduce((acc, p) => acc + p.fields.fare, 0)
+```
+
+It's import to understand the reduce has two parameters. The first is the callback, and the second is the initial value for the accumulator! 
+
+The callback takes two parameters, the first is the accumulator, and the second is current value from the array. 
+
+## Using map, filter, and reduce together
+
+You will want to use map, filter, and reduce together. For example, the Titanic data is missing some values. Some ages and fares are unknown, you'll want to filter the undefined values.
+
+For example you might want to get the average age. To do this you migth: 
+
+- map ages to create a list of all ages
+- filter the ages to remove missing undefined (missing data)
+- reduce to get a total of all ages
+- divide the total by the number of passengers
+
+```JS
+const allAges = data.map(p => p.fields.age)
+const filteredAges = allAges.filter(age => age !== undefined)
+const totalAge = filteredAges.reduce((acc, age) => acc + age, 0)
+const averageAge = totalAge / filteredAges.length
+```
+
+Since map and filter return an array you chain your calls to make for shorter code. 
+
+```JS
+const totalAges = data.map(p => p.fields.age).filter(age => age !== undefined).reduce((acc, age) => acc + age, 0)
+```
+
+This leaves the problem of calculating the average, since the number of ages was not calculated. The example shows how the map, filter, and reduce can be called from the return value of the previous function. 
 
 ## Evaluating your work
 
