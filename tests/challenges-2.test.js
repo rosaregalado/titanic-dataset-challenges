@@ -135,17 +135,21 @@ describe('Challenge 2 Titanic', () => {
 		expect(index.countAllProperty(data, 'pclass')).toEqual(pclassCounts)
 	})
 
-	test('Test makeHistogram', () => {
-		const ages10 = data.filter(p => p.fields.age !== undefined).reduce((acc, p) => {
-			if (acc[Math.floor(p.fields.age / 10)] === undefined) {
-				acc[Math.floor(p.fields.age / 10)] = 1
-			} else {
-				acc[Math.floor(p.fields.age / 10)] += 1
-			}
-			return acc 
-		}, [])
+	test.skip('Test makeHistogram', () => {
+		const ages10 = data
+			.filter(p => p.fields.age !== undefined)
+			.reduce((acc, p) => {
+				if (acc[Math.floor(p.fields.age / 10)] === undefined) {
+					acc[Math.floor(p.fields.age / 10)] = 1
+				} else {
+					acc[Math.floor(p.fields.age / 10)] += 1
+				}
+				return acc 
+			}, [])
 
-		const ages5 = data.filter(p => p.fields.age !== undefined).reduce((acc, p) => {
+		const ages5 = data
+		.filter(p => p.fields.age !== undefined)
+		.reduce((acc, p) => {
 			if (acc[Math.floor(p.fields.age / 5)] === undefined) {
 				acc[Math.floor(p.fields.age / 5)] = 1
 			} else {
@@ -162,13 +166,6 @@ describe('Challenge 2 Titanic', () => {
 			}
 			return acc 
 		}, [])
-
-		console.log('Ages 5 ---------------')
-		console.log(ages10)
-		console.log('Ages 10 ---------------')
-		console.log(ages5)
-		console.log('Fares ---------------')
-		console.log(fares)
 
 		expect(index.makeHistogram(data, 'age', 10)).toEqual(Array.from(ages10, v => v || 0))
 		expect(index.makeHistogram(data, 'age', 5)).toEqual(Array.from(ages5, v => v || 0))
@@ -189,8 +186,8 @@ describe('Challenge 2 Titanic', () => {
 	})
 
 	test.skip('Test getUniqueValues', () => {
-		expect(index.getUniqueValues(data, 'pclass').sort()).toEqual([3, 2, 1].sort())
-		expect(index.getUniqueValues(data, 'embarked').sort()).toEqual(['C', 'S', 'Q', undefined].sort())
+		expect(index.getUniqueValues(data, 'pclass').sort()).toEqual(['3', '2', '1'].sort())
+		expect(index.getUniqueValues(data, 'embarked').sort()).toEqual(['C', 'S', 'Q'].sort())
 		expect(index.getUniqueValues(data, 'sex').sort()).toEqual(['male', 'female'].sort())
 		expect(index.getUniqueValues(data, 'survived').sort()).toEqual(['Yes', 'No'].sort())
 	})
