@@ -29,13 +29,17 @@ beforeAll((done) => {
 // the line below: describe.skip() -> describe()
 
 describe('Challenge 2 Titanic', () => {
+	
+	// The tests below are disabled with skip: 
+	// test.skip(...)
+	// Remove skip to run the tests below:
+	// test(...)
 
 	// Beucause these tests return long arrays of data it was 
 	// impractical to hard code all these arrays here so the 
 	// below generates the lists from the data! The code below 
-	// are the answers to the questions. Don't peak unless you 
-	// are really stuck on a problem. 
-
+	// are the answers to the questions. You can check your work
+	// against the solutions here. 
 
 
 
