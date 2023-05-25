@@ -32,13 +32,15 @@ const getAllValuesForProperty = (data, property) => {
 // Return an array where a given property matches the given value
 // For example property = 'sex' and value = 'male' returns an 
 // array of all the male passengers [{...}, {...}, {...}, ...]
+// Here the goal is to return an array of passenger objects 
+// that patch the property and value. 
 
 const filterByProperty = (data, property, value) => {
 	return []
 }
 
 // 3 -------------------------------------------------------------
-// Filter out missing or null values
+// Filter out missing values
 // Return an array where the objects that have undefined for a 
 // given property have been removed
 
@@ -49,7 +51,8 @@ const filterNullForProperty = (data, property) => {
 // 4 -------------------------------------------------------------
 // Abstract the sum by creating a function that returns the sum 
 // for any (numeric) property
-// Return the total of all values for a given property. This
+// Return the total of all values for a given property.
+// You need to remove any missing values because n + undefined = NaN!
 
 const sumAllProperty = (data, property) => {
 	return 0
@@ -70,6 +73,8 @@ const countAllProperty = (data, property) => {
 	return {}
 }
 
+// Use reduce with an object as the starting accumulator! 
+
 
 // 6 ------------------------------------------------------------
 // Make histogram. The goal is to return an array with values 
@@ -83,6 +88,17 @@ const makeHistogram = (data, property, step) => {
 	return []
 }
 
+// Note! There may not be no values for a particular step. For example
+// if we get passenger ages in increments of 5 there are 0 passengers in the 
+// 70 bracket but there are passengers in 60, and 80. So you might end up with 
+// Age bucket
+//   5 10 15 20  25  30 35 40 45 50 55 60 65 70 75            80  85
+// [40,22,16,86,114,106,95,72,48,41,32,16,15, 4, 6,<1 empty item>, 1]
+// There are 0 passengers in the 76 to 80 year age bucket. You may have the 
+// right answer but if that slot in the array is empty the test will fail 
+// becuase that index should show 0. There are 0 passengers in that age range. 
+
+
 // 7 ------------------------------------------------------------
 // normalizeProperty takes data and a property and returns an 
 // array of normalized values. To normalize the values you need
@@ -91,6 +107,15 @@ const makeHistogram = (data, property, step) => {
 const normalizeProperty = (data, property) => {
 	return []
 }
+
+// Normalizing is an important process that can make many other
+// operations easier. Normalizing allows you to take numbers in one 
+// range and convert them to any other range. 
+// For this example you need to find the max value first before 
+// generating an array of normalized values.
+
+// If the range of data included negative numbers or did not start at 0
+// we might also need to find the minimum value. 
 
 // 8 ------------------------------------------------------------
 // Write a function that gets all unique values for a property. 
@@ -102,6 +127,10 @@ const normalizeProperty = (data, property) => {
 const getUniqueValues = (data, property) => {
 	return []
 }
+
+// There are a couple ways to do this. 
+// Use an object and add each value as a key. The value can be anything. 
+// Use a Set. Be sure to convert this to an array before returning! 
 
 // --------------------------------------------------------------
 // --------------------------------------------------------------
