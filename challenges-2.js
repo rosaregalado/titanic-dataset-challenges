@@ -25,7 +25,13 @@
 // Or if property = 'age' -> [40, 26, 22, 28, 23, 45, 21, ...]
 
 const getAllValuesForProperty = (data, property) => {
-	return []
+	// const values = [];
+	// for (const passenger of data) {
+	// 	const value = passenger[property];
+	// 	values.push(value);
+	// }
+	// return values;
+	return data.map((p) => {return p.fields[property]})
 }
 
 // 2 -------------------------------------------------------------
@@ -36,7 +42,14 @@ const getAllValuesForProperty = (data, property) => {
 // that patch the property and value. 
 
 const filterByProperty = (data, property, value) => {
-	return []
+	// const filteredPassengers = [];
+  // for (const passenger of data) {
+  //   if (passenger[property] === value) {
+  //     filteredPassengers.push(passenger);
+  //   }
+  // }
+	// return filteredPassengers;
+	return data.filter((p) => {return p.fields[property] === value})
 }
 
 // 3 -------------------------------------------------------------
@@ -45,7 +58,8 @@ const filterByProperty = (data, property, value) => {
 // given property have been removed
 
 const filterNullForProperty = (data, property) => {
-	return []
+	const filteredData = data.filter(passenger => passenger.fields[property] !== undefined);
+  return filteredData;
 }
 
 // 4 -------------------------------------------------------------
@@ -55,7 +69,16 @@ const filterNullForProperty = (data, property) => {
 // You need to remove any missing values because n + undefined = NaN!
 
 const sumAllProperty = (data, property) => {
-	return 0
+	const filteredData = data.filter(p => p.fields[property] !== undefined);
+	return filteredData.reduce((acc, p) => acc + p.fields[property], 0)
+	// let sum = 0;
+  // for (const passenger of data) {
+  //   const value = passenger[property];
+  //   if (typeof value === 'number') {
+  //     sum += value;
+  //   }
+  // }
+  // return sum;
 }
 
 
@@ -70,7 +93,24 @@ const sumAllProperty = (data, property) => {
 // at Cherbourg, 77 emabrked at Queenstown, and 2 are undedfined
 
 const countAllProperty = (data, property) => {
-	return {}
+	// const counts = {};
+  // for (const passenger of data) {
+  //   const value = passenger[property];
+  //   if (counts[value] === undefined) {
+  //     counts[value] = 0;
+  //   }
+  //   counts[value]++;
+  // }
+	// return counts;
+	const filteredData = data.map(p => p.fields[property]);
+	return filteredData.reduce((counts, v) => {
+		if (counts[v] === undefined) {
+			counts[v] = 1;
+		} else {
+			counts[v]++;
+		}
+		return counts;
+	}, {})
 }
 
 // Use reduce with an object as the starting accumulator! 
@@ -85,7 +125,27 @@ const countAllProperty = (data, property) => {
 // ages 0 - 10, 10 - 20, 20 - 30 etc. 
 
 const makeHistogram = (data, property, step) => {
-	return []
+	// const histogram = [];
+  // for (let i = 0; i < data.length; i++) {
+  //   const value = data[i][property];
+  //   const bucket = Math.floor(value / step);
+  //   if (histogram[bucket] === undefined) {
+  //     histogram[bucket] = 0;
+  //   }
+  //   histogram[bucket]++;
+  // }
+	// return histogram;
+	const filteredData = data.filter(p => p.fields[property] !== undefined).map(p => p.fields[property]);
+	const histogram = [];
+	for (let i = 0; i < filteredData.length; i++) {
+		const index = Math.floor(filteredData[i] / step);
+		if (histogram[index] === undefined) {
+			histogram[index] = 1;
+		} else {
+			histogram[index]++;
+		}
+	}
+	return Array.from(histogram, v => v || 0);
 }
 
 // Note! There may not be no values for a particular step. For example
@@ -105,7 +165,24 @@ const makeHistogram = (data, property, step) => {
 // to divide each value by the maximum value in the array.
 
 const normalizeProperty = (data, property) => {
-	return []
+	const filtered = data.filter((p) => {return p.fields[property] !== undefined}).map((p) => {return p.fields[property]}) 
+	const max = Math.max(...filtered)
+	return filtered.map((v) => {return v / max})
+	// const normalizedValues = [];
+  // let maxValue = Number.MIN_VALUE;
+  // for (const passenger of data) {
+  //   const value = passenger[property];
+  //   if (value > maxValue) {
+  //     maxValue = value;
+  //   }
+  // }
+  // for (const passenger of data) {
+  //   const value = passenger[property];
+  //   const normalizedValue = value / maxValue;
+  //   normalizedValues.push(normalizedValue);
+  // }
+	// return normalizedValues;
+	
 }
 
 // Normalizing is an important process that can make many other
@@ -125,7 +202,15 @@ const normalizeProperty = (data, property) => {
 // would return ['male', 'female']
 
 const getUniqueValues = (data, property) => {
-	return []
+	// const uniqueValues = new Set();
+  // for (const passenger of data) {
+  //   const value = passenger[property];
+  //   uniqueValues.add(value);
+  // }
+	// return Array.from(uniqueValues);
+	const values = data.filter(p => p.fields[property] !== undefined).map(p => p.fields[property]);
+	const unique = new Set(values);
+	return Array.from(unique)
 }
 
 // There are a couple ways to do this. 

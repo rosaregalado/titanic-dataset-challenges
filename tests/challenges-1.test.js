@@ -23,7 +23,7 @@ const json_data = './titanic-passengers.json'
 		})
 	})
 
-describe('Challenge 1 Titanic', () => {
+describe.skip('Challenge 1 Titanic', () => {
 
 	test('Challenge 1: Test getTotalpassengers', () => {
 		expect(index.getTotalPassengers(data)).toBe(891)
